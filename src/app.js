@@ -25,5 +25,12 @@ app.use(cookieParser());
 
 //----------------All the middle wares defined Above-----------------------
 
+// Routes
+
+import userRoutes from "./routes/user.routes.js";
+
+// routes Declaration
+// http://localhost:8000/api/v1/users
+app.use("/api/v1/users",userRoutes);
 
 export {app} 
