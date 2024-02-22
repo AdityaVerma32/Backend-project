@@ -23,7 +23,7 @@ app.use(express.static("public"));
 // access cookies of user and set them
 app.use(cookieParser());
 
-// All teh middle wares defined below----------------------------------
+//----------------All the middle wares defined Above-----------------------
 
 
 export {app} 
