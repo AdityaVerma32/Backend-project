@@ -30,7 +30,7 @@ const userSchema = new Schema({
         required: true,
     },
     coverImage:{
-        type:String     // cloudinary url
+        type:String,     // cloudinary url
     },
     watchHistory:[{
         type:Schema.Types.ObjectId,
@@ -53,7 +53,7 @@ const userSchema = new Schema({
 // 10 defines the hash rounds
 userSchema.pre("save",async function(next){
     if(this.isModified("password")){
-        this.password= bcrypt.hash(this.password,10);
+        this.password= await bcrypt.hash(this.password,10);
         next();
     }
 })
@@ -94,4 +94,4 @@ userSchema.methods.generateAccessToken = function(){
     )
 }
 
-export const User = mongoose("User", userSchema);
+export const User = mongoose.model("User", userSchema);

@@ -2,7 +2,7 @@ import multer from "multer";
 
 
 // there are two ways to store
-// Either u store inon disk or in memory
+// Either u store on disk or in memory
 const storage = multer.diskStorage({
 
     // the destination where file must be saved 
@@ -12,9 +12,8 @@ const storage = multer.diskStorage({
 
     // configuration of the file after saving
     filename: function (req, file, cb) {
-        // todo: 
         cb(null, file.originalname)
     }
 })
 
-export const upload = multer({ storage })
+export const upload = multer({ storage: storage })
