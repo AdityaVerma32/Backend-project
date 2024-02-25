@@ -3,6 +3,7 @@ import { ApiErrors } from "../utils/ApiErrors.js";
 import { User } from "../models/user.model.js";
 import {uploadOncloudinary} from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import fs from "fs";
 
 
 //-------------------------ALGORITHM-------------------------------
@@ -47,18 +48,8 @@ const registerUser = asyncHandler(async (req, res) => {
             { email },
         ]
     })
-    if(existedUser){
-        throw new ApiErrors(409, "User Already Exist with same Username or Email!!")
-    }
-    console.log("Step 3 completed ");
 
-    console.log(req.files)
-    
-
-    // Step 4: check for image and avatar 
     const avatarLocalPath = req.files?.avatar[0].path;
-    //coverImageLocalPath = req.files?.coverImage[0].path;
-    
     let coverImageLocalPath;
     console.log("Outside if block")
 
@@ -66,6 +57,29 @@ const registerUser = asyncHandler(async (req, res) => {
         console.log("Inside if block")
         coverImageLocalPath = req.files.coverImage[0].path;
     }
+
+    console.log("\nExisted Users Data : ")
+    if(existedUser){
+        if(avatarLocalPath){
+            fs.unlinkSync(avatarLocalPath);
+        }
+        if(coverImageLocalPath){
+            fs.unlinkSync(coverImageLocalPath);
+        }
+        throw new ApiErrors(409, "User Already Exist with same Username or Email!!")
+        
+
+    }
+    console.log("Step 3 completed ");
+
+    console.log(req.files)
+    
+
+    // Step 4: check for image and avatar 
+    
+    //coverImageLocalPath = req.files?.coverImage[0].path;
+    
+
 
     if(!avatarLocalPath ){
         throw new ApiErrors(400, "Please upload an avatar");
