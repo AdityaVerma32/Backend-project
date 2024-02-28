@@ -7,7 +7,9 @@ import jwt from "jsonwebtoken";
 export const verifyJWT = asyncHandler(async (req,_, next) => {
     try {
         // we either take accessToken from cookies or from http header(In case of mobile application)
-        console.log(req.cookies)
+        //console.log(req.cookies)
+        
+        //console.log("\nUser Verified\n")
 
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
 
@@ -24,7 +26,6 @@ export const verifyJWT = asyncHandler(async (req,_, next) => {
         }
 
         req.user = user;
-        console.log("\nUser Verified\n")
         next();
     } catch (err) {
         throw new ApiErrors(401, err.message || "Invalid Access Token")

@@ -3,7 +3,14 @@ import {
     registerUser,
     loginUser,
     logoutUser,
-    refreshAccessToken
+    refreshAccessToken,
+    updateUserAvatar,
+    changeCurrentPassword,
+    getCurrentUser,
+    updateAccountDetails,
+    updateUserCoverImage,
+    getUserChannelProfile,
+    getWatchHistory
 } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -34,6 +41,46 @@ router.route("/logout").post(
     logoutUser
 )
 
-router.route("/refresh-token").post(refreshAccessToken)
+router.route("/refresh-token").post(
+    refreshAccessToken
+)
+
+router.route("/change-password").post(
+    verifyJWT,
+    changeCurrentPassword
+)
+
+router.route("/current-user").get(
+    verifyJWT,
+    getCurrentUser
+)
+
+router.route("/update-account").patch(
+    verifyJWT,
+    updateAccountDetails
+)
+
+// patch is used for updating
+router.route("/updateAvatar").patch(
+    verifyJWT,
+    upload.single('avatar'),
+    updateUserAvatar
+)
+
+router.route("/updatecoverimage").patch(
+    verifyJWT,
+    upload.single("coverImage"),
+    updateUserCoverImage
+)
+
+router.route("/c/:username").get(
+    verifyJWT,
+    getUserChannelProfile
+)
+
+router.route("/watchhistory").get(
+    verifyJWT,
+    getWatchHistory
+)
 
 export default router
