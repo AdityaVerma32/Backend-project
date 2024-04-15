@@ -77,9 +77,8 @@ userSchema.pre("save", async function (next) {
 // mongoose supports making of methods by user using syntax 
 // - userSchema.methods.methodName 
 // returns true or false
-userSchema.methods.isPasswordCorrect = async function (pass) {
-    return await bcrypt.compare(pass, this.password)
-}
+
+
 
 userSchema.methods.generateAccessToken = function () {
     return jwt.sign(
